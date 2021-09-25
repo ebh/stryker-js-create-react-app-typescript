@@ -1,6 +1,8 @@
 {
   "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
   "_comment": "This config was generated using 'stryker init'. Please see the guide for more information: https://stryker-mutator.io/docs/stryker-js/guides/react",
+  "checkers": ["typescript"],
+  "tsconfigFile": "tsconfig.json",
   "testRunner": "jest",
   "reporters": [
     "progress",

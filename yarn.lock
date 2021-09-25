@@ -1824,6 +1824,15 @@
     semver "~7.3.5"
     tslib "~2.3.0"
 
+"@stryker-mutator/typescript-checker@^5.4.0":
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/@stryker-mutator/typescript-checker/-/typescript-checker-5.4.0.tgz#a0914dec3194ccf4a6e3f51c675723c32ae7f268"
+  integrity sha512-vpHhCgIG2tz0yX6WpwXXh62tiGajL+YhLfXkm5HRJbn1TMUpNfjhTVZuA4UZhGLH1zl5q/9QTmSKvuDqeYeytA==
+  dependencies:
+    "@stryker-mutator/api" "5.4.0"
+    "@stryker-mutator/util" "5.4.0"
+    semver "~7.3.2"
+
 "@stryker-mutator/util@5.4.0":
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/@stryker-mutator/util/-/util-5.4.0.tgz#203dd5a69958e38154a8ff5cbf366fbdd6f71cc1"
@@ -10384,7 +10393,7 @@ semver@^7.2.1, semver@^7.3.2:
   dependencies:
     lru-cache "^6.0.0"
 
-semver@^7.3.5, semver@~7.3.5:
+semver@^7.3.5, semver@~7.3.2, semver@~7.3.5:
   version "7.3.5"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.3.5.tgz#0b621c879348d8998e4b0e4be94b3f12e6018ef7"
   integrity sha512-PoeGJYh8HK4BTO/a9Tf6ZG3veo/A7ZVsYrSA6J8ny9nb3B1VrpkuN+z9OE5wfE5p6H4LchYZsegiQgbJD94ZFQ==
