@@ -1,46 +1,89 @@
-# Getting Started with Create React App
+# StrykerJS with create-react-app (TypeScript)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repo exists assist in raising a ticket [stryker-mutator/stryker-js](https://github.com/stryker-mutator/stryker-js).
 
-## Available Scripts
+This branch reflects running the process documented by [StrykerJs->Guides->React](https://stryker-mutator.io/docs/stryker-js/guides/react/).
 
-In the project directory, you can run:
 
-### `yarn start`
+## Steps to Reproduce
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Create fresh create-react-app App (TypeScript)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Run:
+```
+npx create-react-app stryker-js-create-react-app-typescript --template typescript
+cd stryker-js-create-react-app-typescript
+```
 
-### `yarn test`
+### Verify tests are working
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Run:
+```
+CI=true yarn test
+```
 
-### `yarn build`
+You should see:
+```
+yarn run v1.22.11
+$ react-scripts test
+PASS src/App.test.tsx
+  ✓ renders learn react link (26 ms)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        1.228 s
+Ran all test suites.
+✨  Done in 2.06s.
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Add StrykerJS
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Run:
+```
+yarn add -D @stryker-mutator/core @stryker-mutator/jest-runner @stryker-mutator/typescript @stryker-mutator/html-reporter
+```
 
-### `yarn eject`
+### Create config
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+`stryker.conf.js`:
+```
+module.exports = function (config) {
+  config.set({
+    mutate: ['src/**/*.ts?(x)', '!src/**/*@(.test|.spec|Spec).ts?(x)'],
+    mutator: 'typescript',
+    testRunner: 'jest',
+    reporter: ['progress', 'clear-text', 'html'],
+    coverageAnalysis: 'off',
+    jest: {
+      project: 'react',
+    },
+  });
+};
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Run Stryker
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+stryker run
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Expected Result
 
-## Learn More
+* Stryker to output mutation report
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Actual Results
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+15:09:43 (46559) INFO ConfigReader Using stryker.conf.js
+15:09:43 (46559) WARN ConfigReader Usage of `module.exports = function(config) {}` is deprecated. Please use `module.export = {}` or a "stryker.conf.json" file. For more details, see https://stryker-mutator.io/blog/2020-03-11/stryker-version-3#new-config-format
+The @stryker-mutator/html-reporter package is a stub package. The html reporter is now included with @stryker-mutator/core. There is no need to have the @stryker-mutator/html-reporter package installed! Are you still using stryker v2? Then please upgrade stryker to at least 3.x using or downgrade this plugin to the latest 2.x release.
+The @stryker-mutator/typescript package does not have any function in Stryker 4.0. Please remove it from your devDependencies.
+15:09:44 (46559) WARN OptionsValidator DEPRECATED. Use of "mutator" as string is no longer needed. You can remove it from your configuration. Stryker now supports mutating of JavaScript and friend files out of the box.
+15:09:44 (46559) ERROR OptionsValidator Config option "jest" must NOT have additional properties
+15:09:44 (46559) ERROR Stryker Please correct this configuration error and try again.
+```
+
+## Stryker Version
+
+Running `stryker --version` returns `5.4.0`
